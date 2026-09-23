@@ -31,9 +31,17 @@ Part of **喵造实验室 / MeowBuild Lab** and the Academic Lint family:
 
 When a project directory contains a clear `\\documentclass{}` entry point, ManuscriptLint follows its `\\input{}`, `\\include{}`, and `\\subfile{}` graph. Unrelated draft `.tex` files are not treated as active manuscript content.
 
-## Install from source
+## Install
 
 Requires Python 3.10+.
+
+The first public release is prepared for PyPI. After v0.1.0 is published:
+
+~~~bash
+pip install manuscriptlint
+~~~
+
+### From source
 
 ~~~bash
 git clone https://github.com/coocoomaomao/ManuscriptLint.git
@@ -89,12 +97,16 @@ manuscriptlint check paper/ --figurelint --reflint
 
 ### GitHub Actions
 
+Before the first tag is published, use `@main`:
+
 ~~~yaml
 - uses: coocoomaomao/ManuscriptLint@main
   with:
     path: paper/
     strict: "true"
 ~~~
+
+After v0.1.0, pin the Action to `@v0.1.0`.
 
 See [GitHub Action usage](docs/GITHUB_ACTION.md).
 
@@ -103,6 +115,13 @@ See [GitHub Action usage](docs/GITHUB_ACTION.md).
 ManuscriptLint focuses on **deterministic preflight checks**. It should identify verifiable structural problems without pretending to judge scientific quality, novelty, or whether a paper will be accepted.
 
 Unused figures and unused references are currently informational because research repositories often keep intentional extras.
+
+## Release
+
+The first public release is **v0.1.0**.
+
+- [v0.1.0 release notes](docs/releases/v0.1.0.md)
+- [Publishing guide](docs/PUBLISHING.md)
 
 ## Planned next
 

@@ -39,6 +39,7 @@ manuscriptlint = "manuscriptlint.cli:app"
 Homepage = "https://github.com/coocoomaomao/ManuscriptLint"
 Repository = "https://github.com/coocoomaomao/ManuscriptLint"
 Issues = "https://github.com/coocoomaomao/ManuscriptLint/issues"
+Changelog = "https://github.com/coocoomaomao/ManuscriptLint/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/manuscriptlint"]

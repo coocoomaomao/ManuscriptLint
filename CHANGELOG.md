@@ -1,6 +1,16 @@
 # Changelog
 
+All notable changes to ManuscriptLint will be documented in this file.
+
 ## [Unreleased]
+
+### Planned
+- graphicspath / macro-resolution improvements
+- supplementary-material checks
+- source-backed publisher submission profiles
+- DOCX support where deterministic checks are practical
+
+## [0.1.0] - 2026-09-23
 
 ### Added
 - initial ManuscriptLint CLI
@@ -22,3 +32,8 @@
 - machine-readable JSON output
 - native GitHub Actions workflow annotations
 - reusable composite GitHub Action
+- wheel / sdist build validation
+- PyPI Trusted Publishing workflow
+
+[Unreleased]: https://github.com/coocoomaomao/ManuscriptLint/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/coocoomaomao/ManuscriptLint/releases/tag/v0.1.0
