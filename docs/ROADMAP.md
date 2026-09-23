@@ -18,8 +18,9 @@
 - [x] unused BibTeX references
 - [ ] graphicspath / macro handling improvements
 - [ ] supplementary-material checks
-- [ ] JSON output
-- [ ] native GitHub annotations
+- [x] JSON output
+- [x] native GitHub annotations
+- [x] reusable GitHub Action
 
 ## v0.3 — submission profiles
 - source-backed publisher presets

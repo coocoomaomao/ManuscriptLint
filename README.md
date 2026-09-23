@@ -24,6 +24,9 @@ Part of **喵造实验室 / MeowBuild Lab** and the Academic Lint family:
 - unused figure files in conventional figure directories (informational)
 - unused BibTeX entries (informational, respects `\\nocite{*}`)
 - optional FigureLint and RefLint integration
+- JSON output for editor / CI integrations
+- native GitHub Actions annotations
+- reusable GitHub composite action
 - CI-friendly exit codes and strict mode
 
 When a project directory contains a clear `\\documentclass{}` entry point, ManuscriptLint follows its `\\input{}`, `\\include{}`, and `\\subfile{}` graph. Unrelated draft `.tex` files are not treated as active manuscript content.
@@ -66,11 +69,34 @@ Treat warnings as CI failures:
 manuscriptlint check paper/ --strict
 ~~~
 
+Machine-readable JSON:
+
+~~~bash
+manuscriptlint check paper/ --format json
+~~~
+
+Emit native GitHub workflow annotations:
+
+~~~bash
+manuscriptlint check paper/ --github-annotations
+~~~
+
 Run the wider Academic Lint toolchain when FigureLint / RefLint are installed:
 
 ~~~bash
 manuscriptlint check paper/ --figurelint --reflint
 ~~~
+
+### GitHub Actions
+
+~~~yaml
+- uses: coocoomaomao/ManuscriptLint@main
+  with:
+    path: paper/
+    strict: "true"
+~~~
+
+See [GitHub Action usage](docs/GITHUB_ACTION.md).
 
 ## Philosophy
 
@@ -82,7 +108,6 @@ Unused figures and unused references are currently informational because researc
 
 - graphicspath / macro handling improvements
 - supplementary-material checks
-- JSON output and native GitHub annotations
 - source-backed publisher presets
 - DOCX manuscript support
 
