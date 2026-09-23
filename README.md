@@ -10,7 +10,7 @@ Part of **喵造实验室 / MeowBuild Lab** and the Academic Lint family:
 - **RefLint** — reference QA
 - **ManuscriptLint** — manuscript preflight
 
-## What v0.1 checks
+## Current checks
 
 - duplicate LaTeX labels
 - unresolved `\\ref{}` / `\\eqref{}` references
@@ -18,10 +18,15 @@ Part of **喵造实验室 / MeowBuild Lab** and the Academic Lint family:
 - missing `\\input{}` / `\\include{}` source files
 - missing `\\includegraphics{}` files
 - figure / table environments without captions
-- TODO / FIXME markers left in manuscript text
-- recursive LaTeX project discovery
+- TODO / FIXME markers left in reachable manuscript text
+- **entry-point-aware LaTeX include graph**
+- include-cycle detection
+- unused figure files in conventional figure directories (informational)
+- unused BibTeX entries (informational, respects `\\nocite{*}`)
 - optional FigureLint and RefLint integration
 - CI-friendly exit codes and strict mode
+
+When a project directory contains a clear `\\documentclass{}` entry point, ManuscriptLint follows its `\\input{}`, `\\include{}`, and `\\subfile{}` graph. Unrelated draft `.tex` files are not treated as active manuscript content.
 
 ## Install from source
 
@@ -71,10 +76,11 @@ manuscriptlint check paper/ --figurelint --reflint
 
 ManuscriptLint focuses on **deterministic preflight checks**. It should identify verifiable structural problems without pretending to judge scientific quality, novelty, or whether a paper will be accepted.
 
+Unused figures and unused references are currently informational because research repositories often keep intentional extras.
+
 ## Planned next
 
-- smarter LaTeX include graph
-- cross-file figure/table numbering diagnostics
+- graphicspath / macro handling improvements
 - supplementary-material checks
 - JSON output and native GitHub annotations
 - source-backed publisher presets
