@@ -19,3 +19,6 @@
 - informational unused-figure diagnostics
 - informational unused-BibTeX-entry diagnostics
 - `\\nocite{*}` handling for unused-reference checks
+- machine-readable JSON output
+- native GitHub Actions workflow annotations
+- reusable composite GitHub Action

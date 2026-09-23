@@ -1,0 +1,68 @@
+name: ManuscriptLint
+description: Preflight academic LaTeX manuscripts before submission
+author: coocoomaomao
+
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  path:
+    description: LaTeX file or project directory to inspect
+    required: false
+    default: "."
+  strict:
+    description: Fail when warnings are present
+    required: false
+    default: "false"
+  figurelint:
+    description: Install and run FigureLint as part of the preflight
+    required: false
+    default: "false"
+  reflint:
+    description: Install and run RefLint as part of the preflight
+    required: false
+    default: "false"
+  python-version:
+    description: Python version used to run ManuscriptLint
+    required: false
+    default: "3.12"
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install ManuscriptLint
+      shell: bash
+      run: python -m pip install "${{ github.action_path }}"
+
+    - name: Install FigureLint
+      if: ${{ inputs.figurelint == 'true' }}
+      shell: bash
+      run: python -m pip install figurelint
+
+    - name: Install RefLint
+      if: ${{ inputs.reflint == 'true' }}
+      shell: bash
+      run: python -m pip install reflint
+
+    - name: Run ManuscriptLint
+      shell: bash
+      run: |
+        args=(check "${{ inputs.path }}" --github-annotations)
+
+        if [[ "${{ inputs.strict }}" == "true" ]]; then
+          args+=(--strict)
+        fi
+        if [[ "${{ inputs.figurelint }}" == "true" ]]; then
+          args+=(--figurelint)
+        fi
+        if [[ "${{ inputs.reflint }}" == "true" ]]; then
+          args+=(--reflint)
+        fi
+
+        manuscriptlint "${args[@]}"

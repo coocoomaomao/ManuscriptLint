@@ -24,6 +24,7 @@ jobs:
         run: |
           manuscriptlint --help
           manuscriptlint check examples/paper/
+          manuscriptlint check examples/paper/ --format json
 
   package:
     runs-on: ubuntu-latest
@@ -43,3 +44,11 @@ jobs:
           /tmp/manuscriptlint-wheel-test/bin/python -m pip install dist/*.whl
           /tmp/manuscriptlint-wheel-test/bin/manuscriptlint --help
           /tmp/manuscriptlint-wheel-test/bin/manuscriptlint check examples/paper/
+
+  action-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./
+        with:
+          path: examples/paper/
