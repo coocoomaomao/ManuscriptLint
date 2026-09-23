@@ -14,3 +14,8 @@
 - optional FigureLint and RefLint integration
 - strict mode and CI-ready exit codes
 - Python 3.10–3.12 CI
+- entry-point-aware LaTeX include graph
+- include-cycle detection
+- informational unused-figure diagnostics
+- informational unused-BibTeX-entry diagnostics
+- `\\nocite{*}` handling for unused-reference checks

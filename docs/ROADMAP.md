@@ -12,12 +12,14 @@
 - CI-friendly exit codes
 
 ## v0.2 — project intelligence
-- smarter LaTeX include graph
-- graphicspath / macro handling improvements
-- unused figures and references
-- supplementary-material checks
-- JSON output
-- native GitHub annotations
+- [x] smarter LaTeX include graph
+- [x] include-cycle detection
+- [x] unused figures in conventional figure directories
+- [x] unused BibTeX references
+- [ ] graphicspath / macro handling improvements
+- [ ] supplementary-material checks
+- [ ] JSON output
+- [ ] native GitHub annotations
 
 ## v0.3 — submission profiles
 - source-backed publisher presets

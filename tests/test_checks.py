@@ -92,3 +92,116 @@ Some tabular content.
     assert "TODO_LEFT" in codes(findings)
     assert "FIGURE_CAPTION_MISSING" in codes(findings)
     assert "TABLE_CAPTION_MISSING" in codes(findings)
+
+
+def test_directory_scan_only_checks_reachable_tex_files(tmp_path: Path) -> None:
+    (tmp_path / "main.tex").write_text(
+        r"""\documentclass{article}
+\begin{document}
+\input{sections/intro}
+\end{document}
+""",
+        encoding="utf-8",
+    )
+    sections = tmp_path / "sections"
+    sections.mkdir()
+    (sections / "intro.tex").write_text(
+        r"""\section{Intro}\label{sec:intro}
+See \ref{sec:intro}.
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "old-draft.tex").write_text(
+        r"""Old draft points to \ref{ghost}.""",
+        encoding="utf-8",
+    )
+
+    findings, count, *_ = inspect_project(tmp_path)
+
+    assert count == 2
+    assert "REF_UNRESOLVED" not in codes(findings)
+
+
+def test_include_cycle_is_reported_without_looping(tmp_path: Path) -> None:
+    (tmp_path / "main.tex").write_text(
+        r"""\documentclass{article}
+\input{part}
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "part.tex").write_text(r"""\input{main}""", encoding="utf-8")
+
+    findings, count, *_ = inspect_project(tmp_path)
+
+    assert count == 2
+    assert "INCLUDE_CYCLE" in codes(findings)
+
+
+def test_unused_figure_in_conventional_directory_is_info(tmp_path: Path) -> None:
+    figures = tmp_path / "figures"
+    figures.mkdir()
+    (figures / "used.pdf").write_bytes(b"%PDF-used")
+    (figures / "unused.png").write_bytes(b"png")
+    (tmp_path / "main.tex").write_text(
+        r"""\documentclass{article}
+\usepackage{graphicx}
+\includegraphics{figures/used}
+""",
+        encoding="utf-8",
+    )
+
+    findings, *_ = inspect_project(tmp_path)
+
+    unused = [f for f in findings if f.code == "FIGURE_UNUSED"]
+    assert len(unused) == 1
+    assert unused[0].path.name == "unused.png"
+
+
+def test_unused_bib_entry_is_info(tmp_path: Path) -> None:
+    (tmp_path / "main.tex").write_text(
+        r"""\documentclass{article}
+See \cite{used}.
+\bibliography{references}
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "references.bib").write_text(
+        """@article{used,
+  title = {Used}
+}
+@article{unused,
+  title = {Unused}
+}
+""",
+        encoding="utf-8",
+    )
+
+    findings, *_ = inspect_project(tmp_path)
+
+    unused = [f for f in findings if f.code == "REFERENCE_UNUSED"]
+    assert len(unused) == 1
+    assert "unused" in unused[0].message
+
+
+def test_nocite_star_suppresses_unused_reference_info(tmp_path: Path) -> None:
+    (tmp_path / "main.tex").write_text(
+        r"""\documentclass{article}
+\nocite{*}
+\bibliography{references}
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "references.bib").write_text(
+        """@article{one,
+  title = {One}
+}
+@article{two,
+  title = {Two}
+}
+""",
+        encoding="utf-8",
+    )
+
+    findings, *_ = inspect_project(tmp_path)
+
+    assert "REFERENCE_UNUSED" not in codes(findings)
