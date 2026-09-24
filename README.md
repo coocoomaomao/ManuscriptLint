@@ -1,5 +1,13 @@
 # ManuscriptLint 🐈‍⬛📝
 
+<p>
+  <a href="https://pypi.org/project/manuscriptlint/"><img src="https://img.shields.io/pypi/v/manuscriptlint" alt="PyPI"></a>
+  <a href="https://github.com/coocoomaomao/ManuscriptLint/releases/tag/v0.1.0"><img src="https://img.shields.io/github/v/release/coocoomaomao/ManuscriptLint" alt="GitHub release"></a>
+  <a href="https://github.com/coocoomaomao/ManuscriptLint/actions/workflows/ci.yml"><img src="https://github.com/coocoomaomao/ManuscriptLint/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/pypi/pyversions/manuscriptlint" alt="Python versions">
+  <img src="https://img.shields.io/github/license/coocoomaomao/ManuscriptLint" alt="MIT License">
+</p>
+
 > **ESLint for academic manuscripts.**
 
 **ManuscriptLint** is an open-source preflight linter for academic manuscripts. It checks a LaTeX project before submission and catches structural problems that are easy to miss during writing.
@@ -35,10 +43,16 @@ When a project directory contains a clear `\\documentclass{}` entry point, Manus
 
 Requires Python 3.10+.
 
-The first public release is prepared for PyPI. After v0.1.0 is published:
+### PyPI
 
 ~~~bash
 pip install manuscriptlint
+~~~
+
+Verify the installation:
+
+~~~bash
+manuscriptlint --help
 ~~~
 
 ### From source
@@ -97,16 +111,14 @@ manuscriptlint check paper/ --figurelint --reflint
 
 ### GitHub Actions
 
-Before the first tag is published, use `@main`:
+Pin the Action to the published release:
 
 ~~~yaml
-- uses: coocoomaomao/ManuscriptLint@main
+- uses: coocoomaomao/ManuscriptLint@v0.1.0
   with:
     path: paper/
     strict: "true"
 ~~~
-
-After v0.1.0, pin the Action to `@v0.1.0`.
 
 See [GitHub Action usage](docs/GITHUB_ACTION.md).
 
@@ -118,8 +130,10 @@ Unused figures and unused references are currently informational because researc
 
 ## Release
 
-The first public release is **v0.1.0**.
+The first public release, **ManuscriptLint v0.1.0**, is now available.
 
+- [PyPI package](https://pypi.org/project/manuscriptlint/)
+- [GitHub release](https://github.com/coocoomaomao/ManuscriptLint/releases/tag/v0.1.0)
 - [v0.1.0 release notes](docs/releases/v0.1.0.md)
 - [Publishing guide](docs/PUBLISHING.md)
 
